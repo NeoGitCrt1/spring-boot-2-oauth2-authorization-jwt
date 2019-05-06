@@ -1,10 +1,6 @@
 package com.kristijangeorgiev.auth.configuration;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import javax.sql.DataSource;
-
+import com.kristijangeorgiev.auth.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,7 +31,9 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
-import com.kristijangeorgiev.auth.entity.User;
+import javax.sql.DataSource;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @Configuration
 @EnableAuthorizationServer
@@ -63,7 +61,7 @@ public class OAuth2Configuration extends AuthorizationServerConfigurerAdapter {
 	@Bean
 	public OAuth2RequestFactory requestFactory() {
 		CustomOauth2RequestFactory requestFactory = new CustomOauth2RequestFactory(clientDetailsService);
-		requestFactory.setCheckUserScopes(true);
+		requestFactory.setCheckUserScopes(checkUserScopes);
 		return requestFactory;
 	}
 
